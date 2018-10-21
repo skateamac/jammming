@@ -80,7 +80,7 @@ class App extends Component {
   }
   async savePlaylist() {
     const trackURIs = this.state.playlistTracks.map(t => { return t.url });
-    const playlistid = await Spotify.savePlaylist(this.state.playlistName, trackURIs, this.state.accessToken);
+    await Spotify.savePlaylist(this.state.playlistName, trackURIs, this.state.accessToken);
   }
   async search(term) {
     const results = await Spotify.search(term, this.state.accessToken);

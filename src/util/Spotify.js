@@ -4,22 +4,18 @@ let expiresIn;
 
 const Spotify = {
   async getAccessToken() {
-
-    console.log('running getAccessToken');
     if (accessToken) {
-      console.log(`returning stored token of ${accessToken}`);
       return accessToken;
     } else if ( (window.location.href.indexOf('access_token') > -1) & (window.location.href.indexOf('expires_in') > -1) ) {
       accessToken = window.location.href.match(/access_token=([^&]*)/)[1];
       expiresIn = window.location.href.match(/expires_in=([^&]*)/)[1];
-      console.log(`token is set to ${accessToken}`);
       window.setTimeout(() => accessToken = '', expiresIn * 1000);
       window.history.pushState('Access Token', null, '/');
       return accessToken;
     } else {
-      console.log('do not have a token, redirecting to get one.');
       const urltoFetch = 'https://accounts.spotify.com/authorize?'
       const queryResponseType = '&response_type=token';
+      // const queryRedirect = 'redirect_uri=http://localhost:3000/';
       const queryRedirect = 'redirect_uri=http://soggy-actor.surge.sh/';
       const scopes = 'user-read-private playlist-modify-private'
       const endpoint = `${urltoFetch}client_id=${clientId}&${queryRedirect}&scope=${scopes}${queryResponseType}`
@@ -28,7 +24,6 @@ const Spotify = {
   },
   search(term, accessToken) {
     const endpoint = `https://api.spotify.com/v1/search?type=track&q=${term}`;
-    console.log(`in search, got token ${accessToken}`);
     return fetch(endpoint, {
       headers: { Authorization: `Bearer ${accessToken}` }
     }).then(response => {
@@ -77,7 +72,6 @@ const Spotify = {
         response => response.json()
       ).then(
         jsonResponse => {
-          console.log(jsonResponse);
           playlistID = jsonResponse.id;
           /* add tracks to the playlist */
           return fetch(`https://api.spotify.com/v1/users/${userid}/playlists/${playlistID}/tracks`, {
