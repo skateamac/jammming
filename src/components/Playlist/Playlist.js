@@ -6,7 +6,9 @@ class PlayList extends React.Component {
   constructor(props) {
     super(props);
     this.handleNameChange = this.handleNameChange.bind(this);
-    this.state = {};
+  }
+  handleNameChange(event) {
+    this.props.onNameChange(event.target.value);
   }
   render() {
     return (
@@ -16,10 +18,7 @@ class PlayList extends React.Component {
         <a className="PlayList-save" onClick={this.props.onSave}>SAVE TO SPOTIFY</a>
       </div>
     );
-  }
-  handleNameChange(event) {
-    this.props.onNameChange(event.target.value);
-  }
+  }  
 };
 
 export default PlayList;

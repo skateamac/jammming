@@ -5,7 +5,6 @@ import Track from '../Track/Track.js';
 class TrackList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
   render() {
     return (
@@ -13,7 +12,7 @@ class TrackList extends React.Component {
           <ol>{this.props.tracks.map(t => (<li key={t.id}><Track onAdd={this.props.onAdd} track={t} onRemove={this.props.onRemove} isRemoval={this.props.isRemoval}/></li>))}</ol>
       </div>
     );
-    }
+  }
 };
 
 export default TrackList;
